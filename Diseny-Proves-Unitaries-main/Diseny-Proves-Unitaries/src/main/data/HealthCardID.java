@@ -1,5 +1,4 @@
 package data;
-
 /**
  * Value Object para identificador de tarjeta sanitaria del paciente.
  * Immutable, final class que encapsula validación de CIP.
@@ -13,9 +12,7 @@ package data;
  * - No Primitive Obsession: String encapsulado en objeto tipado
  */
 public final class HealthCardID {
-    
     private final String personalID;
-    
     /**
      * Constructor con validación exhaustiva.
      * 
@@ -34,7 +31,6 @@ public final class HealthCardID {
         }
         this.personalID = code;
     }
-    
     /**
      * Obtiene el código personal de identificación.
      * 
@@ -43,7 +39,6 @@ public final class HealthCardID {
     public String getPersonalID() {
         return personalID;
     }
-    
     /**
      * Compara dos HealthCardID por valor (no por referencia).
      * 
@@ -63,7 +58,6 @@ public final class HealthCardID {
         HealthCardID that = (HealthCardID) o;
         return personalID.equals(that.personalID);
     }
-    
     /**
      * Calcula hash basado en el valor del CIP.
      * 
@@ -75,7 +69,6 @@ public final class HealthCardID {
     public int hashCode() {
         return personalID.hashCode();
     }
-    
     /**
      * Representación en String legible.
      * 

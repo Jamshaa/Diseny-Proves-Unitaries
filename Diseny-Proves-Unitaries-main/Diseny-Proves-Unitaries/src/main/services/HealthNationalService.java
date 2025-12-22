@@ -1,5 +1,4 @@
 package services; // Package for involved services
-
 /**
  * External services for managing and storing ePrescriptions from population and IA support
  */
@@ -16,6 +15,5 @@ public interface HealthNationalService {
             AnyCurrentPrescriptionException, NotCompletedMedicalPrescription;
     // Internal operation
     MedicalPrescription generateTreatmCodeAndRegister(MedicalPrescription ePresc);
-
      */
 }
