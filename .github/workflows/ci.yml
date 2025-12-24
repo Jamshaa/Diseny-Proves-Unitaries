@@ -29,5 +29,4 @@ jobs:
             maven-${{ runner.os }}-
 
       - name: Build and run tests
-        working-directory: Diseny-Proves-Unitaries
         run: mvn clean verify
