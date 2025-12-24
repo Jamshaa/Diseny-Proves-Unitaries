@@ -22,10 +22,13 @@ jobs:
         with:
           distribution: temurin
           java-version: '17'
-          cache: 'maven' 
-          # La opción 'cache: maven' aquí reemplaza y simplifica el paso manual de caché que tenías
+          cache: 'maven'
+
+      # PASO DE DEPURACIÓN: Esto mostrará en el log qué archivos hay realmente
+      - name: List files (Debug)
+        run: ls -R
 
       - name: Build and run tests
-        # Importante: Indicamos la carpeta donde está el pom.xml
-        working-directory: ./Diseny-Proves-Unitaries
-        run: mvn clean verify
+        # Usamos -f para decirle a Maven exactamente dónde está el archivo
+        # Asumimos que está dentro de la subcarpeta 'Diseny-Proves-Unitaries'
+        run: mvn -f Diseny-Proves-Unitaries/pom.xml clean verify
