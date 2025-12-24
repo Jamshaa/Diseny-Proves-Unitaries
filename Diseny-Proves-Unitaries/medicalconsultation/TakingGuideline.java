@@ -11,6 +11,17 @@ public class TakingGuideline { // Represents the taking guidelines for a medicin
     public TakingGuideline(DayMoment dM, float du, float d, float f,
                            FqUnit fu, String i) {
 
+        if (dM == null)
+            throw new IllegalArgumentException("DayMoment no puede ser null");
+        if (du <= 0)
+            throw new IllegalArgumentException("Duration tiene que ser > 0");
+        if (fu == null)
+            throw new IllegalArgumentException("FqUnit no puede ser null");
+        if (d <= 0)
+            throw new IllegalArgumentException("Dose tiene que ser > 0");
+        if (f <= 0)
+            throw new IllegalArgumentException("Frequency tiene que ser > 0");
+
         this.dMoment = dM;
         this.duration = du;
         this.posology = new Posology(d, f, fu);
