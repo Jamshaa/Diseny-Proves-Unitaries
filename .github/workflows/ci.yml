@@ -5,6 +5,9 @@ on:
     branches:
       - main
       - develop
+  push:
+    branches:
+      - main
 
 jobs:
   build:
@@ -19,61 +22,10 @@ jobs:
         with:
           distribution: temurin
           java-version: '17'
-
-      - name: Ensure pom.xml exists
-        run: |
-          if [ ! -f pom.xml ]; then
-            echo "No pom.xml found, creating minimal pom.xml"
-            cat <<EOF > pom.xml
-            <project xmlns="http://maven.apache.org/POM/4.0.0"
-                     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-                     xsi:schemaLocation="http://maven.apache.org/POM/4.0.0
-                     http://maven.apache.org/xsd/maven-4.0.0.xsd">
-              <modelVersion>4.0.0</modelVersion>
-
-              <groupId>edu.example</groupId>
-              <artifactId>diseny-proves-unitaries</artifactId>
-              <version>1.0-SNAPSHOT</version>
-
-              <properties>
-                <maven.compiler.source>17</maven.compiler.source>
-                <maven.compiler.target>17</maven.compiler.target>
-              </properties>
-
-              <dependencies>
-                <dependency>
-                  <groupId>org.junit.jupiter</groupId>
-                  <artifactId>junit-jupiter</artifactId>
-                  <version>5.10.1</version>
-                  <scope>test</scope>
-                </dependency>
-              </dependencies>
-
-              <build>
-                <plugins>
-                  <plugin>
-                    <groupId>org.apache.maven.plugins</groupId>
-                    <artifactId>maven-surefire-plugin</artifactId>
-                    <version>3.2.5</version>
-                    <configuration>
-                      <useModulePath>false</useModulePath>
-                    </configuration>
-                  </plugin>
-                </plugins>
-              </build>
-            </project>
-            EOF
-          else
-            echo "pom.xml already exists"
-          fi
-
-      - name: Cache Maven dependencies
-        uses: actions/cache@v4
-        with:
-          path: ~/.m2
-          key: maven-${{ runner.os }}-${{ hashFiles('**/pom.xml') }}
-          restore-keys: |
-            maven-${{ runner.os }}-
+          cache: 'maven' 
+          # La opción 'cache: maven' aquí reemplaza y simplifica el paso manual de caché que tenías
 
       - name: Build and run tests
+        # Importante: Indicamos la carpeta donde está el pom.xml
+        working-directory: ./Diseny-Proves-Unitaries
         run: mvn clean verify
