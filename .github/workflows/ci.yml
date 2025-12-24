@@ -24,7 +24,27 @@ jobs:
           java-version: '17'
           cache: 'maven'
 
-      - name: Build and run tests
-        # Aquí le decimos: entra en la subcarpeta antes de ejecutar maven
-        working-directory: ./Diseny-Proves-Unitaries
-        run: mvn clean verify
+      - name: Buscar pom.xml y ejecutar Maven
+        run: |
+          echo "📍 Estoy en la ruta: $(pwd)"
+          
+          # Buscamos dónde narices está el pom.xml
+          UBICACION_POM=$(find . -name "pom.xml" -print -quit)
+          
+          if [ -z "$UBICACION_POM" ]; then
+            echo "❌ ERROR FATAL: No encuentro ningún archivo pom.xml en todo el repositorio."
+            echo "🔍 Listado de archivos para depurar:"
+            ls -R
+            exit 1
+          else
+            echo "✅ Archivo encontrado en: $UBICACION_POM"
+            
+            # Verificamos si está vacío
+            if [ ! -s "$UBICACION_POM" ]; then
+               echo "❌ ERROR: El archivo pom.xml existe pero está VACÍO (0 bytes). Tienes que ponerle código dentro."
+               exit 1
+            fi
+
+            echo "🚀 Ejecutando Maven apuntando directamente al archivo..."
+            mvn -f "$UBICACION_POM" clean verify
+          fi
