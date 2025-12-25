@@ -1,13 +1,14 @@
 package medicalconsultation;
 
 import data.HealthCardID;
+import interfaces.MedicalHistoryTestInterface;
 import medicalconsultation.exceptions.IncorrectParametersException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-public class NewEmptyMedicalHistoryTest {
+public class NewEmptyMedicalHistoryTest implements MedicalHistoryTestInterface {
 
     private HealthCardID cip;
     private int memberShipNum;
@@ -34,7 +35,8 @@ public class NewEmptyMedicalHistoryTest {
     }
 
 
-    @Test public void setNewDoctorTest() throws IncorrectParametersException{
+    @Test
+    public void setNewDoctorTest() throws IncorrectParametersException{
         mh.setNewDoctor(123);
         assertEquals(123, mh.getMembShipNumb());
     }
