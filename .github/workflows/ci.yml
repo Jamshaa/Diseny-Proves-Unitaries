@@ -17,34 +17,12 @@ jobs:
       - name: Checkout repo
         uses: actions/checkout@v4
 
-      - name: Set up JDK 17
+      - name: Set up JDK 21
         uses: actions/setup-java@v4
         with:
           distribution: temurin
-          java-version: '17'
+          java-version: '21'
           cache: 'maven'
 
-      - name: Buscar pom.xml y ejecutar Maven
-        run: |
-          echo "📍 Estoy en la ruta: $(pwd)"
-          
-          # Buscamos dónde narices está el pom.xml
-          UBICACION_POM=$(find . -name "pom.xml" -print -quit)
-          
-          if [ -z "$UBICACION_POM" ]; then
-            echo "❌ ERROR FATAL: No encuentro ningún archivo pom.xml en todo el repositorio."
-            echo "🔍 Listado de archivos para depurar:"
-            ls -R
-            exit 1
-          else
-            echo "✅ Archivo encontrado en: $UBICACION_POM"
-            
-            # Verificamos si está vacío
-            if [ ! -s "$UBICACION_POM" ]; then
-               echo "❌ ERROR: El archivo pom.xml existe pero está VACÍO (0 bytes). Tienes que ponerle código dentro."
-               exit 1
-            fi
-
-            echo "🚀 Ejecutando Maven apuntando directamente al archivo..."
-            mvn -f "$UBICACION_POM" clean verify
-          fi
+      - name: Build with Maven
+        run: mvn clean verify
