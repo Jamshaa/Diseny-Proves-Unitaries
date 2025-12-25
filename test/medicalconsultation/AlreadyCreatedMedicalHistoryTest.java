@@ -8,7 +8,7 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-public class MedicalHistoryAlreadyWithAnnotationsTest implements MedicalHistoryTestInterface {
+public class AlreadyCreatedMedicalHistoryTest implements MedicalHistoryTestInterface {
 
     private MedicalHistory mh;
 

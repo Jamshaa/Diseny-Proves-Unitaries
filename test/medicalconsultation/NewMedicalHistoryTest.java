@@ -8,7 +8,7 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-public class NewEmptyMedicalHistoryTest implements MedicalHistoryTestInterface {
+public class NewMedicalHistoryTest implements MedicalHistoryTestInterface {
 
     private HealthCardID cip;
     private int memberShipNum;
