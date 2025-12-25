@@ -1,29 +1,19 @@
 package data;
 
-import data.Exceptions.EmptyDigitalSignatureException;
-import data.Exceptions.NullDigitalSignatureException;
-
+import data.exceptions.DigitalSignatureException;
 import java.util.Arrays;
 
 public final class DigitalSignature {
 
     private final byte[] signature;
 
-    public DigitalSignature(byte[] sign)
-            throws NullDigitalSignatureException, EmptyDigitalSignatureException {
-
+    public DigitalSignature(byte[] sign) throws DigitalSignatureException {
         if (sign == null) {
-            throw new NullDigitalSignatureException(
-                    "Digital signature cannot be null"
-            );
+            throw new DigitalSignatureException("Digital signature cannot be null");
         }
-
         if (sign.length == 0) {
-            throw new EmptyDigitalSignatureException(
-                    "Digital signature cannot be empty"
-            );
+            throw new DigitalSignatureException("Digital signature cannot be empty");
         }
-
         this.signature = sign;
     }
 
@@ -33,8 +23,10 @@ public final class DigitalSignature {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof DigitalSignature)) return false;
+        if (this == o)
+            return true;
+        if (o == null || getClass() != o.getClass())
+            return false;
         DigitalSignature that = (DigitalSignature) o;
         return Arrays.equals(signature, that.signature);
     }

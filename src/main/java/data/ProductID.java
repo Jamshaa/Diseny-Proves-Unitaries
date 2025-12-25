@@ -1,25 +1,21 @@
 package data;
 
-import data.Exceptions.InvalidProductIDFormatException;
-import data.Exceptions.NullProductIDException;
+import data.exceptions.ProductIDException;
 
 public final class ProductID {
 
     private final String productCode;
 
-    public ProductID(String code)
-            throws NullProductIDException, InvalidProductIDFormatException {
+    public ProductID(String code) throws ProductIDException {
 
         if (code == null) {
-            throw new NullProductIDException(
-                    "ProductID cannot be null"
-            );
+            throw new ProductIDException(
+                    "ProductID cannot be null");
         }
 
         if (!code.matches("^\\d{12}$")) {
-            throw new InvalidProductIDFormatException(
-                    "ProductID must contain exactly 12 numeric digits"
-            );
+            throw new ProductIDException(
+                    "ProductID must contain exactly 12 numeric digits");
         }
 
         this.productCode = code;
@@ -31,8 +27,10 @@ public final class ProductID {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (this == o)
+            return true;
+        if (o == null || getClass() != o.getClass())
+            return false;
         ProductID productID = (ProductID) o;
         return productCode.equals(productID.productCode);
     }

@@ -1,27 +1,22 @@
 package data;
 
-import data.Exceptions.InvalidHealthCardIDFormatException;
-import data.Exceptions.NullHealthCardIDException;
+import data.exceptions.HealthCardIDException;
 
-public final class HealthCardID {
+/**
+ * The personal identifying code in the National Health Service.
+ */
+final public class HealthCardID {
 
     private final String personalID;
 
-    public HealthCardID(String code)
-            throws NullHealthCardIDException, InvalidHealthCardIDFormatException {
-
+    public HealthCardID(String code) throws HealthCardIDException {
         if (code == null) {
-            throw new NullHealthCardIDException(
-                    "HealthCardID cannot be null"
-            );
+            throw new HealthCardIDException("HealthCardID cannot be null");
         }
-
+        // pattern: 16 alphanumeric characters
         if (!code.matches("^[A-Za-z0-9]{16}$")) {
-            throw new InvalidHealthCardIDFormatException(
-                    "HealthCardID must contain exactly 16 alphanumeric characters"
-            );
+            throw new HealthCardIDException("HealthCardID must contain exactly 16 alphanumeric characters");
         }
-
         this.personalID = code;
     }
 
@@ -31,8 +26,10 @@ public final class HealthCardID {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (this == o)
+            return true;
+        if (o == null || getClass() != o.getClass())
+            return false;
         HealthCardID hcardID = (HealthCardID) o;
         return personalID.equals(hcardID.personalID);
     }

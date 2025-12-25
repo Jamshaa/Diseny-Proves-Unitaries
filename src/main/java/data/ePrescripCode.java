@@ -1,25 +1,21 @@
 package data;
 
-import data.Exceptions.InvalidePrescripCodeFormatException;
-import data.Exceptions.NullePrescripCodeException;
+import data.exceptions.ePrescripCodeException;
 
 public final class ePrescripCode {
 
     private final String code;
 
-    public ePrescripCode(String code)
-            throws NullePrescripCodeException, InvalidePrescripCodeFormatException {
+    public ePrescripCode(String code) throws ePrescripCodeException {
 
         if (code == null) {
-            throw new NullePrescripCodeException(
-                    "ePrescripCode cannot be null"
-            );
+            throw new ePrescripCodeException(
+                    "ePrescripCode cannot be null");
         }
 
         if (!code.matches("^[A-Z0-9]{10}$")) {
-            throw new InvalidePrescripCodeFormatException(
-                    "ePrescripCode must contain exactly 10 alphanumeric uppercase characters"
-            );
+            throw new ePrescripCodeException(
+                    "ePrescripCode must contain exactly 10 alphanumeric uppercase characters");
         }
 
         this.code = code;
@@ -31,8 +27,10 @@ public final class ePrescripCode {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (this == o)
+            return true;
+        if (o == null || getClass() != o.getClass())
+            return false;
         ePrescripCode that = (ePrescripCode) o;
         return code.equals(that.code);
     }
