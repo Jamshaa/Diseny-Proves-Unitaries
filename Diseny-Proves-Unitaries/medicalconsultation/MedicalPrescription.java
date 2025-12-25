@@ -102,7 +102,6 @@ public class MedicalPrescription { // Represents medical prescription
         lines.remove(prodID);
     }
 
-    // ---- Getters & setters (only some, as required) ----
 
     public HealthCardID getCip() {
         return cip;
