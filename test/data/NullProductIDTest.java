@@ -8,7 +8,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 class NullProductIDTest {
 
     @Test
-    void NullProductIDExceptionTest() {
+    public void NullProductIDExceptionTest() {
         assertThrows(NullProductIDException.class, () -> new ProductID(null));
     }
 }

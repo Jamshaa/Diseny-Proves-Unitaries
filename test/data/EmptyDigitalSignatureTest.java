@@ -8,7 +8,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 class EmptyDigitalSignatureTest {
 
     @Test
-    void EmptyDigitalSignatureExceptionTest() {
+    public void EmptyDigitalSignatureExceptionTest() {
         assertThrows(EmptyDigitalSignatureException.class, () -> new data.DigitalSignature(new byte[0]));
     }
 }

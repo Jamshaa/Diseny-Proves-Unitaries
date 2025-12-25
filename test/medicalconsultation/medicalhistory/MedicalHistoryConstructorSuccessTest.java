@@ -1,6 +1,7 @@
-package medicalconsultation;
+package medicalconsultation.medicalhistory;
 
 import data.HealthCardID;
+import medicalconsultation.MedicalHistory;
 import medicalconsultation.exceptions.IncorrectParametersException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

@@ -8,7 +8,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 class NullePrescripCodeTest {
 
     @Test
-    void NullePrescripCodeExceptionTest() {
+    public void NullePrescripCodeExceptionTest() {
         assertThrows(NullePrescripCodeException.class, () -> new data.ePrescripCode(null));
     }
 }

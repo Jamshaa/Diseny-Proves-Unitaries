@@ -8,12 +8,12 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 class InvalidProductIDFormatTest {
 
     @Test
-    void InvalidProductIDFormatLengthTest() {
+    public void InvalidProductIDFormatLengthTest() {
         assertThrows(InvalidProductIDFormatException.class, () -> new ProductID("123"));
     }
 
     @Test
-    void InvalidProductIDFormatNonDigitsTest() {
+    public void InvalidProductIDFormatNonDigitsTest() {
         assertThrows(InvalidProductIDFormatException.class, () -> new ProductID("12345678901A"));
     }
 }
