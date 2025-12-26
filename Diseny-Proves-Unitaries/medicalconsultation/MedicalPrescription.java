@@ -30,7 +30,6 @@ public class MedicalPrescription { // Represents medical prescription
         this.cip = cip;
         this.membShipNumb = membShipNumb;
         this.illness = illness;
-        this.prescDate = new Date();
         this.lines = new HashMap<>();
     }
 
@@ -129,5 +128,9 @@ public class MedicalPrescription { // Represents medical prescription
 
     public void setESign(DigitalSignature eSign) {
         this.eSign = eSign;
+    }
+
+    public void setPrescDate(Date prescDate) {
+        this.prescDate = prescDate;
     }
 }

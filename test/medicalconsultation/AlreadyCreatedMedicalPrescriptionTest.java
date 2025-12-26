@@ -67,6 +67,7 @@ public class AlreadyCreatedMedicalPrescriptionTest implements MedicalPrescriptio
         mp.setPrescCode(new ePrescripCode("EP12355555"));
         mp.setEndDate(new Date());
         mp.setESign(new DigitalSignature(new byte[]{1, 2, 3}));
+        mp.setPrescDate(new Date());
 
         //Si no se produce ningún error
         assertTrue(true);
