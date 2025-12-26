@@ -4,6 +4,7 @@ import data.DigitalSignature;
 import data.HealthCardID;
 import data.ProductID;
 import data.ePrescripCode;
+import interfaces.MedicalPrescriptionTestInterface;
 import medicalconsultation.exceptions.IncorrectTakingGuidelinesException;
 import medicalconsultation.exceptions.ProductAlreadyInPrescriptionException;
 import medicalconsultation.exceptions.ProductNotInPrescriptionException;
@@ -15,12 +16,12 @@ import java.util.Date;
 import static medicalconsultation.DayMoment.AFTERBREAKFAST;
 import static org.junit.jupiter.api.Assertions.*;
 
-public class AlreadyCreatedMedicalPrescriptionTest {
+public class AlreadyCreatedMedicalPrescriptionTest implements MedicalPrescriptionTestInterface {
 
     private MedicalPrescription mp;
 
     @BeforeEach
-    void setUp() {
+    public void setUp() {
 
         HealthCardID cip = new HealthCardID("ABCDE12345678901");
         int membShipNumb = 1234;
@@ -30,7 +31,7 @@ public class AlreadyCreatedMedicalPrescriptionTest {
     }
 
     @Test
-    void addLineTest() throws ProductAlreadyInPrescriptionException,
+    public void addLineTest() throws ProductAlreadyInPrescriptionException,
             IncorrectTakingGuidelinesException {
 
         String[] instruct = {"BEFORELUNCH", "15", "1", "1", "DAY", "Take with water"};
@@ -38,7 +39,7 @@ public class AlreadyCreatedMedicalPrescriptionTest {
     }
 
     @Test
-    void addLineEmptyInstructionsTest() throws ProductAlreadyInPrescriptionException,
+    public void addLineEmptyInstructionsTest() throws ProductAlreadyInPrescriptionException,
             IncorrectTakingGuidelinesException {
 
         String[] instruct = {"BEFORELUNCH", "15", "1", "1", "DAY"};
@@ -47,14 +48,14 @@ public class AlreadyCreatedMedicalPrescriptionTest {
     }
 
     @Test
-    void modifyDoseInLineTest() throws ProductNotInPrescriptionException{
+    public void modifyDoseInLineTest() throws ProductNotInPrescriptionException{
         TakingGuideline tg = new TakingGuideline(AFTERBREAKFAST, 12, 2.00f, 1, FqUnit.DAY, "Take with water");
         mp.modifyDoseInLine(new ProductID("123456789012"), 2.00f);
         assertEquals(mp.getLines().get(new ProductID("123456789012")).getPosology().getDose(), tg.getPosology().getDose());
     }
 
     @Test
-    void removeLineTest() throws ProductNotInPrescriptionException{
+    public void removeLineTest() throws ProductNotInPrescriptionException{
 
         mp.removeLine(new ProductID("123456789012"));
 
@@ -62,7 +63,7 @@ public class AlreadyCreatedMedicalPrescriptionTest {
     }
 
     @Test
-    void settersTest() {
+    public void settersTest() {
         mp.setPrescCode(new ePrescripCode("EP12355555"));
         mp.setEndDate(new Date());
         mp.setESign(new DigitalSignature(new byte[]{1, 2, 3}));
