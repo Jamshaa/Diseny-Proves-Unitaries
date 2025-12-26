@@ -2,9 +2,8 @@ package medicalconsultation;
 
 import data.HealthCardID;
 import medicalconsultation.exceptions.IncorrectParametersException;
-import medicalconsultation.interfaces.MedicalHistoryIntf;
 
-public class MedicalHistory implements MedicalHistoryIntf { // A class that represents a medical history
+public class MedicalHistory { // A class that represents a medical history
 
     private HealthCardID cip;      // the CIP of the patient
     private int membShipNumb;      // the membership number of the family doctor
