@@ -23,7 +23,7 @@ public class MedicalPrescription { // Represents medical prescription
     private DigitalSignature eSign;      // the eSignature of the doctor
 
     // Its components: the set of medical prescription lines
-    private Map<ProductID, TakingGuideline> lines;
+    private final Map<ProductID, TakingGuideline> lines;
 
     // Makes some initialization
     public MedicalPrescription(HealthCardID cip, int membShipNumb, String illness) {
@@ -130,4 +130,7 @@ public class MedicalPrescription { // Represents medical prescription
     public void setESign(DigitalSignature eSign) {
         this.eSign = eSign;
     }
+
+    //for testing
+    public Date getPrescDate(){return prescDate;}
 }
