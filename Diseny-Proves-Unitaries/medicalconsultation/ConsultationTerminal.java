@@ -219,11 +219,9 @@ public class ConsultationTerminal {
     }
 
     // Setter methods for injecting dependences
-    public void setHealthNationalService(HealthNationalService hns) {
-        this.hns = hns;
-    }
+    public void setHealthNationalService(HealthNationalService hns) {this.hns = hns;}
 
-    public void setESignature(DigitalSignature sign) {
-        this.eSign = sign;
-    }
+    public void setDecisionMakingAI(DecisionMakingAI dmAI){this.dmAI = dmAI;}
+
+    public void setESignature(DigitalSignature sign) {this.eSign = sign;}
 }
