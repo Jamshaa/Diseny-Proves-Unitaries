@@ -130,7 +130,4 @@ public class MedicalPrescription { // Represents medical prescription
     public void setESign(DigitalSignature eSign) {
         this.eSign = eSign;
     }
-
-    //for testing
-    public Date getPrescDate(){return prescDate;}
 }
