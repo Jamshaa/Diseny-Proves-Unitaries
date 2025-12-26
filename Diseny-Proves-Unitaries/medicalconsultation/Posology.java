@@ -7,10 +7,10 @@ public class Posology { // A class that represents the posology of a medicine
     private FqUnit freqUnit;
 
     // Initializes attributes
-    public Posology(float d, float f, FqUnit u) {
-        this.dose = d;
-        this.freq = f;
-        this.freqUnit = u;
+    public Posology(float dose, float freq, FqUnit freqUnit) {
+        this.dose = dose;
+        this.freq = freq;
+        this.freqUnit = freqUnit;
     }
 
     // Getters and setters

@@ -8,13 +8,13 @@ public class TakingGuideline { // Represents the taking guidelines for a medicin
     private String instructions;
 
     // Initializes attributes
-    public TakingGuideline(DayMoment dM, float du, float d, float f,
-                           FqUnit fu, String i) {
+    public TakingGuideline(DayMoment dayMoment, float duration, float dose, float freq,
+                           FqUnit fqUnit, String instruc) {
 
-        this.dMoment = dM;
-        this.duration = du;
-        this.posology = new Posology(d, f, fu);
-        this.instructions = i;
+        this.dMoment = dayMoment;
+        this.duration = duration;
+        this.posology = new Posology(dose, freq, fqUnit);
+        this.instructions = instruc;
     }
 
     // Getters and setters
