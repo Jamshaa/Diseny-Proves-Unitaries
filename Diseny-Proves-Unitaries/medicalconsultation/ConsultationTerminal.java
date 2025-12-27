@@ -50,8 +50,7 @@ public class ConsultationTerminal {
         hce.addMedicalHistoryAnnotations(assess);
     }
 
-    public void initMedicalPrescriptionEdition()
-            throws ProceduralException {
+    public void initMedicalPrescriptionEdition() {
 
         editingPrescription = true;
     }
@@ -68,6 +67,35 @@ public class ConsultationTerminal {
         }
 
         createMedPrescriptionLine(prodID, instruc);
+    }
+
+    public void callDecisionMakingAI() throws AIException {
+
+        if(!editingPrescription) throw new ProceduralException("Medical prescription edition has not been started");
+
+        dmAI.initDecisionMakingAI();
+
+        decisionMakingAIReady = true;
+    }
+
+    public void askAIForSuggest(String prompt) throws BadPromptException{
+
+        if (!editingPrescription) throw new ProceduralException("Medical prescription edition has not been started");
+
+        if (!decisionMakingAIReady) throw new ProceduralException("Decision making AI has not been started");
+
+        aiAnswer = dmAI.getSuggestions(prompt);
+
+        gotAISuggestions = true;
+    }
+
+    public void extractGuidelinesFromSugg(){
+
+        if (!editingPrescription) throw new ProceduralException("Medical prescription edition has not been started");
+
+        if (!gotAISuggestions) throw new ProceduralException("Decision making AI has not send any suggestions");
+
+        dmAI.parseSuggest(aiAnswer);
     }
 
     public void modifyDoseInLine(ProductID prodID, float newDose)
@@ -176,34 +204,6 @@ public class ConsultationTerminal {
         //No implementation needed
     }
 
-    public void callDecisionMakingAI() throws AIException {
-
-        if(!editingPrescription) throw new ProceduralException("Medical prescription edition has not been started");
-
-        dmAI.initDecisionMakingAI();
-
-        decisionMakingAIReady = true;
-    }
-
-    public void askAIForSuggest(String prompt) throws BadPromptException{
-
-        if (!editingPrescription) throw new ProceduralException("Medical prescription edition has not been started");
-
-        if (!decisionMakingAIReady) throw new ProceduralException("Decision making AI has not been started");
-
-        aiAnswer = dmAI.getSuggestions(prompt);
-
-        gotAISuggestions = true;
-    }
-
-    public void extractGuidelinesFromSugg(){
-
-        if (!editingPrescription) throw new ProceduralException("Medical prescription edition has not been started");
-
-        if (!gotAISuggestions) throw new ProceduralException("Decision making AI has not send any suggestions");
-
-        dmAI.parseSuggest(aiAnswer);
-    }
 
     // internal operations
     private void createMedPrescriptionLine(ProductID prodID, String[] instruc){
@@ -218,7 +218,7 @@ public class ConsultationTerminal {
         treatmentPeriodEstablished = true;
     }
 
-    // Setter methods for injecting dependences
+    // Setter methods for injecting dependencies
     public void setHealthNationalService(HealthNationalService hns) {this.hns = hns;}
 
     public void setDecisionMakingAI(DecisionMakingAI dmAI){this.dmAI = dmAI;}
