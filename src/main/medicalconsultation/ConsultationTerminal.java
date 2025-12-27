@@ -45,7 +45,7 @@ public class ConsultationTerminal {
     private boolean signed = false;
 
 
-    public ConsultationTerminal() {
+    public ConsultationTerminal(Object o, Object object) {
         // dependencies injected later with setters
     }
 
