@@ -41,11 +41,7 @@ public class ConsultationTerminal {
     public void enterMedicalAssessmentInHistory(String assess)
             throws ProceduralException, IncorrectParametersException {
 
-        if (!editingPrescription) {
-            throw new ProceduralException(
-                    "Medical prescription edition has not been started"
-            );
-        }
+        ensureEditing();
 
         hce.addMedicalHistoryAnnotations(assess);
     }
@@ -60,76 +56,51 @@ public class ConsultationTerminal {
             IncorrectTakingGuidelinesException,
             ProductAlreadyInPrescriptionException {
 
-        if (!editingPrescription) {
-            throw new ProceduralException(
-                    "Medical prescription edition has not been started"
-            );
-        }
+        ensureEditing();
 
         createMedPrescriptionLine(prodID, instruc);
     }
 
-    public void callDecisionMakingAI() throws AIException {
+    public void callDecisionMakingAI() throws AIException, ProceduralException {
 
-        if(!editingPrescription) throw new ProceduralException("Medical prescription edition has not been started");
-
+        ensureEditing();
         dmAI.initDecisionMakingAI();
-
         decisionMakingAIReady = true;
     }
 
-    public void askAIForSuggest(String prompt) throws BadPromptException{
+    public void askAIForSuggest(String prompt) throws BadPromptException, ProceduralException{
 
-        if (!editingPrescription) throw new ProceduralException("Medical prescription edition has not been started");
-
+        ensureEditing();
         if (!decisionMakingAIReady) throw new ProceduralException("Decision making AI has not been started");
 
         aiAnswer = dmAI.getSuggestions(prompt);
-
         gotAISuggestions = true;
     }
 
-    public void extractGuidelinesFromSugg(){
+    public void extractGuidelinesFromSugg() throws ProceduralException {
 
-        if (!editingPrescription) throw new ProceduralException("Medical prescription edition has not been started");
-
+        ensureEditing();
         if (!gotAISuggestions) throw new ProceduralException("Decision making AI has not send any suggestions");
 
         dmAI.parseSuggest(aiAnswer);
     }
 
-    public void modifyDoseInLine(ProductID prodID, float newDose)
-            throws ProceduralException,
-            ProductNotInPrescriptionException {
+    public void modifyDoseInLine(ProductID prodID, float newDose) throws ProceduralException, ProductNotInPrescriptionException {
 
-        if (!editingPrescription) {
-            throw new ProceduralException(
-                    "Medical prescription edition has not been started"
-            );
-        }
-
+        ensureEditing();
         mPresc.modifyDoseInLine(prodID, newDose);
     }
 
-    public void removeLine(ProductID prodID) throws ProductNotInPrescriptionException {
+    public void removeLine(ProductID prodID) throws ProductNotInPrescriptionException, ProceduralException {
 
-        if (!editingPrescription) {
-            throw new ProceduralException(
-                    "Medical prescription edition has not been started"
-            );
-        }
-
+        ensureEditing();
         mPresc.removeLine(prodID);
     }
 
     public void enterTreatmentEndingDate(Date date)
-            throws IncorrectEndingDateException {
+            throws IncorrectEndingDateException, ProceduralException {
 
-        if (!editingPrescription) {
-            throw new ProceduralException(
-                    "Medical prescription edition has not been started"
-            );
-        }
+        ensureEditing();
 
         if (date == null) {
             throw new IncorrectEndingDateException("Ending date cannot be null");
@@ -163,11 +134,7 @@ public class ConsultationTerminal {
     public void stampeESignature()
             throws ProceduralException, eSignatureException {
 
-        if (!editingPrescription) {
-            throw new ProceduralException(
-                    "Medical prescription edition has not been started"
-            );
-        }
+        ensureEditing();
 
         if (!treatmentPeriodEstablished) {
             throw new ProceduralException(
@@ -224,4 +191,16 @@ public class ConsultationTerminal {
     public void setDecisionMakingAI(DecisionMakingAI dmAI){this.dmAI = dmAI;}
 
     public void setESignature(DigitalSignature sign) {this.eSign = sign;}
+
+    // Refactoring extract method
+    private void ensureEditing() throws ProceduralException {
+        if (!editingPrescription) {
+            throw new ProceduralException(ERR_NO_EDITION);
+        }
+    }
+
+    private static final String ERR_NO_EDITION =
+            "Medical prescription edition has not been started";
+
+
 }
