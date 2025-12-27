@@ -39,7 +39,7 @@ public class ConsultationTerminal {
     }
 
     public void enterMedicalAssessmentInHistory(String assess)
-            throws ProceduralException, IncorrectParametersException {
+            throws IncorrectParametersException {
 
         ensureEditing();
 
@@ -52,7 +52,7 @@ public class ConsultationTerminal {
     }
 
     public void enterMedicineWithGuidelines(ProductID prodID, String[] instruc)
-            throws ProceduralException,
+            throws
             IncorrectTakingGuidelinesException,
             ProductAlreadyInPrescriptionException {
 
@@ -132,7 +132,7 @@ public class ConsultationTerminal {
     }
 
     public void stampeESignature()
-            throws ProceduralException, eSignatureException {
+            throws eSignatureException {
 
         ensureEditing();
 
