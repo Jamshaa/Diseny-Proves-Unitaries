@@ -16,7 +16,7 @@ import java.util.Date;
 import static medicalconsultation.DayMoment.AFTERBREAKFAST;
 import static org.junit.jupiter.api.Assertions.*;
 
-public class AlreadyCreatedMedicalPrescriptionTest implements MedicalPrescriptionTestInterface {
+public class MedicalPrescriptionWithOneLineTest implements MedicalPrescriptionTestInterface {
 
     private MedicalPrescription mp;
 
