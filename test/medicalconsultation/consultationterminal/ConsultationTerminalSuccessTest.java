@@ -26,6 +26,7 @@ public class ConsultationTerminalSuccessTest {
 
     @BeforeEach
     public void setUp(){
+
         cT = new ConsultationTerminal();
 
         cip = new HealthCardID("ABCD123456789012");
@@ -46,11 +47,13 @@ public class ConsultationTerminalSuccessTest {
 
     @Test
     public void InitRevisionTest() {
+
         assertDoesNotThrow(() -> cT.initRevision(cip,illness));
     }
 
     @Test
     public void enterMedicalAssessmentInHistoryTest() throws ConnectException {
+
         cT.initRevision(cip,illness);
         cT.initMedicalPrescriptionEdition();
         cT.enterMedicalAssessmentInHistory("assess");
@@ -78,6 +81,7 @@ public class ConsultationTerminalSuccessTest {
 
     @Test
     public void callDecisionMakingAITest() throws ConnectException {
+
         cT.initRevision(cip,illness);
         cT.initMedicalPrescriptionEdition();
         cT.callDecisionMakingAI();
@@ -87,6 +91,7 @@ public class ConsultationTerminalSuccessTest {
 
     @Test
     public void askAIForSuggestTest() throws ConnectException {
+
         cT.initRevision(cip,illness);
         cT.initMedicalPrescriptionEdition();
         cT.callDecisionMakingAI();
@@ -94,12 +99,11 @@ public class ConsultationTerminalSuccessTest {
         cT.askAIForSuggest(prompt);
 
         assertEquals(aiStub.aiAnswer, aiStub.getSuggestions(prompt));
-
-
     }
 
     @Test
     public void extractGuidelinesFromSuggTest() throws ConnectException{
+
         cT.initRevision(cip,illness);
         cT.initMedicalPrescriptionEdition();
         cT.callDecisionMakingAI();
@@ -108,11 +112,11 @@ public class ConsultationTerminalSuccessTest {
         cT.extractGuidelinesFromSugg();
         assertTrue(aiStub.parseCalled);
         assertNotNull(aiStub.receivedAiAnswer);
-
     }
 
     @Test
     public void modifyDoseInLine() throws ConnectException{
+
         cT.initRevision(cip,illness);
         cT.initMedicalPrescriptionEdition();
         String[] instruct = {"BEFORELUNCH", "15", "1", "1", "DAY", "Take with water"};
@@ -128,6 +132,7 @@ public class ConsultationTerminalSuccessTest {
 
     @Test
     public void removeLineTest() throws ConnectException{
+
         cT.initRevision(cip,illness);
         cT.initMedicalPrescriptionEdition();
         ProductID productID = new ProductID("123456789012");
@@ -136,12 +141,12 @@ public class ConsultationTerminalSuccessTest {
         cT.removeLine(productID);
 
         assertFalse(hnsStub.getMedicalPrescription(cip,illness).getLines().containsKey(productID));
-
     }
 
     @Test
     public void enterTreatmentEndingDateTest()
             throws IncorrectEndingDateException, ConnectException{
+
         cT.initRevision(cip,illness);
         cT.initMedicalPrescriptionEdition();
         Date endDate = new Date(System.currentTimeMillis() + 2L * 24 * 60 * 60 * 1000);
@@ -152,4 +157,35 @@ public class ConsultationTerminalSuccessTest {
         assertEquals(endDate, prescription.getEndDate());
     }
 
+    @Test
+    public void stampeESignatureTest() throws ConnectException{
+
+        cT.initRevision(cip,illness);
+        cT.initMedicalPrescriptionEdition();
+        Date endDate = new Date(System.currentTimeMillis() + 2L * 24 * 60 * 60 * 1000);
+        cT.enterTreatmentEndingDate(endDate);
+        DigitalSignature eSign = new DigitalSignature("SIGNATURE".getBytes());
+        cT.setESignature(eSign);
+
+        cT.stampeESignature();
+
+        assertEquals(eSign, prescription.geteSign());
+    }
+
+    @Test
+    public void sendHistoryAndPrescriptionTest() throws ConnectException{
+
+        cT.initRevision(cip,illness);
+        cT.initMedicalPrescriptionEdition();
+        Date endDate = new Date(System.currentTimeMillis() + 2L * 24 * 60 * 60 * 1000);
+        cT.enterTreatmentEndingDate(endDate);
+        DigitalSignature eSign = new DigitalSignature("SIGNATURE".getBytes());
+        cT.setESignature(eSign);
+        cT.stampeESignature();
+
+        assertEquals(prescription, cT.sendHistoryAndPrescription());
+        assertTrue(hnsStub.sent);
+
+
+    }
 }
