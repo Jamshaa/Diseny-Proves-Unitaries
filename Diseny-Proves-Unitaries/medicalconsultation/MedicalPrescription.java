@@ -118,6 +118,16 @@ public class MedicalPrescription { // Represents medical prescription
         return lines;
     }
 
+    public Date getEndDate() {
+        return endDate;
+    }
+
+    public Date getPrescDate() {
+        return prescDate;
+    }
+
+    public DigitalSignature geteSign(){return eSign;}
+
     public void setPrescCode(ePrescripCode prescCode) {
         this.prescCode = prescCode;
     }
