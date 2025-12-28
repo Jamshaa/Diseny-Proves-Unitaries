@@ -13,9 +13,10 @@ public class DecisionMakingAIStub implements DecisionMakingAI {
     public String receivedAiAnswer = null;
 
     public String aiAnswer =
-            "<I, 123456789012, BEFORELUNCH, 10, 1, 1, DAY, Take with water>\n" +
-                    "<M, 987654321098, , , 2, , , >\n" +
-                    "<E, 640557143200>";
+            """
+                    <I, 123456789012, BEFORELUNCH, 10, 1, 1, DAY, Take with water>
+                    <M, 987654321098, , , 2, , , >
+                    <E, 640557143200>""";
 
     @Override
     public void initDecisionMakingAI() throws AIException {
