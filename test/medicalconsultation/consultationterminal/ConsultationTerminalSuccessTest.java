@@ -3,6 +3,7 @@ package medicalconsultation.consultationterminal;
 import data.DigitalSignature;
 import data.HealthCardID;
 import data.ProductID;
+import interfaces.ConsultationTerminalTestInterface;
 import medicalconsultation.*;
 import medicalconsultation.exceptions.IncorrectEndingDateException;
 import org.junit.jupiter.api.BeforeEach;
@@ -15,7 +16,7 @@ import java.net.ConnectException;
 import java.util.Date;
 import static org.junit.jupiter.api.Assertions.*;
 
-public class ConsultationTerminalSuccessTest {
+public class ConsultationTerminalSuccessTest implements ConsultationTerminalTestInterface {
     private ConsultationTerminal cT;
     private HealthCardID cip;
     private String illness;

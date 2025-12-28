@@ -19,28 +19,20 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 public class ConsultationTerminalAIExceptionTest {
 
     private ConsultationTerminal ct;
-    private HealthCardID cip;
-    private int membShipNumb;
-    private String illness;
-
-    private MedicalHistory history;
-    private MedicalPrescription prescription;
 
     @BeforeEach
     void setUp() throws Exception {
 
         ct = new ConsultationTerminal();
 
-        cip = new HealthCardID("ABCD123456789012");
-        membShipNumb = 1234;
-        illness = "Hypertension";
+        HealthCardID cip = new HealthCardID("ABCD123456789012");
+        int membShipNumb = 1234;
+        String illness = "Hypertension";
 
-        history = new MedicalHistory(cip, membShipNumb);
-        prescription = new MedicalPrescription(cip, membShipNumb, illness);
+        MedicalHistory history = new MedicalHistory(cip, membShipNumb);
+        MedicalPrescription prescription = new MedicalPrescription(cip, membShipNumb, illness);
 
-        ct.setHealthNationalService(
-                new mocks.HNSStubHappyPath(history, prescription)
-        );
+        ct.setHealthNationalService(new mocks.HNSStubHappyPath(history, prescription));
 
         ct.setESignature(new DigitalSignature("SIGNED".getBytes()));
 
@@ -52,17 +44,17 @@ public class ConsultationTerminalAIExceptionTest {
     }
 
     @Test
-    void callAIExceptionTest() {
+    void AIExceptionTest() {
         ct.setDecisionMakingAI(new AIExceptionStub());
-        assertThrows(AIException.class, ct::callDecisionMakingAI);
+        assertThrows(AIException.class, () -> ct.callDecisionMakingAI());
     }
 
     @Test
-    void badPromptTest() throws Exception {
+    void badPromptExceptionTest() {
         ct.setDecisionMakingAI(new AIBadPromptStub());
 
         ct.callDecisionMakingAI(); // init OK
         assertThrows(BadPromptException.class,
-                () -> ct.askAIForSuggest("bad prompt"));
+                () -> ct.askAIForSuggest("wrong prompt"));
     }
 }
