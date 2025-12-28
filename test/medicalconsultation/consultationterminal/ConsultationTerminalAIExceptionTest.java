@@ -11,6 +11,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import services.exceptions.AIException;
 import services.exceptions.BadPromptException;
+import services.stub.HealthNationalServiceStub;
 
 import java.util.Date;
 
@@ -32,7 +33,7 @@ public class ConsultationTerminalAIExceptionTest {
         MedicalHistory history = new MedicalHistory(cip, membShipNumb);
         MedicalPrescription prescription = new MedicalPrescription(cip, membShipNumb, illness);
 
-        ct.setHealthNationalService(new mocks.HNSStubHappyPath(history, prescription));
+        ct.setHealthNationalService(new HealthNationalServiceStub(history, prescription));
 
         ct.setESignature(new DigitalSignature("SIGNED".getBytes()));
 
