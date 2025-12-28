@@ -126,6 +126,8 @@ public class MedicalPrescription { // Represents medical prescription
         return prescDate;
     }
 
+    public DigitalSignature geteSign(){return eSign;}
+
     public void setPrescCode(ePrescripCode prescCode) {
         this.prescCode = prescCode;
     }
