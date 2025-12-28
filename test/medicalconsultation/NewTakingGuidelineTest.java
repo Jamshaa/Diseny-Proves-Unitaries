@@ -22,7 +22,7 @@ public class NewTakingGuidelineTest {
     }
 
     @Test
-    void createTakingGuideline_initializesAttributesCorrectly() {
+    void takingGuidelineCorrectlyCreatedTest() {
         assertEquals(DayMoment.BEFORELUNCH, tg.getdMoment());
         assertEquals(15.0f, tg.getDuration(), 0.0001);
         assertEquals("Take with water", tg.getInstructions());
@@ -34,19 +34,19 @@ public class NewTakingGuidelineTest {
     }
 
     @Test
-    void setDayMoment_updatesDayMomentCorrectly() {
+    void setDayMomentTest() {
         tg.setdMoment(DayMoment.AFTERDINNER);
         assertEquals(DayMoment.AFTERDINNER, tg.getdMoment());
     }
 
     @Test
-    void setDuration_updatesDurationCorrectly() {
+    void setDurationTest() {
         tg.setDuration(30.0f);
         assertEquals(30.0f, tg.getDuration(), 0.0001);
     }
 
     @Test
-    void setPosology_updatesPosologyCorrectly() {
+    void setPosologyTest() {
         Posology newPosology = new Posology(3.0f, 2.0f, FqUnit.HOUR);
         tg.setPosology(newPosology);
 
@@ -57,7 +57,7 @@ public class NewTakingGuidelineTest {
     }
 
     @Test
-    void setInstructions_updatesInstructionsCorrectly() {
+    void setInstructionsTest() {
         tg.setInstructions("New instructions");
         assertEquals("New instructions", tg.getInstructions());
     }
