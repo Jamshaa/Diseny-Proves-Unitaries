@@ -1,4 +1,4 @@
-package mocks;
+package services.stub;
 
 import data.HealthCardID;
 import medicalconsultation.MedicalHistory;
@@ -9,17 +9,25 @@ import services.exceptions.NotCompletedMedicalPrescription;
 
 import java.net.ConnectException;
 
-public class HNSConnectExceptionStub implements HealthNationalService {
+public class HNSNotCompletedMedicalPrescriptionStub implements HealthNationalService {
+
+    private final MedicalHistory history;
+    private final MedicalPrescription prescription;
+
+    public HNSNotCompletedMedicalPrescriptionStub(MedicalHistory history, MedicalPrescription prescription) {
+        this.history = history;
+        this.prescription = prescription;
+    }
 
     @Override
     public MedicalHistory getMedicalHistory(HealthCardID cip) throws ConnectException {
-        throw new ConnectException("Simulated connection error");
+        return history;
     }
 
     @Override
     public MedicalPrescription getMedicalPrescription(HealthCardID cip, String illness)
             throws ConnectException, AnyCurrentPrescriptionException {
-        throw new ConnectException("Simulated connection error");
+        return prescription;
     }
 
     @Override
@@ -28,11 +36,11 @@ public class HNSConnectExceptionStub implements HealthNationalService {
                                                           String illness,
                                                           MedicalPrescription mPresc)
             throws ConnectException, NotCompletedMedicalPrescription {
-        throw new ConnectException("Simulated connection error");
+        throw new NotCompletedMedicalPrescription("Simulated: prescription not completed");
     }
 
     @Override
     public MedicalPrescription generateTreatmCodeAndRegister(MedicalPrescription ePresc) throws ConnectException {
-        throw new ConnectException("Simulated connection error");
+        return ePresc;
     }
 }
