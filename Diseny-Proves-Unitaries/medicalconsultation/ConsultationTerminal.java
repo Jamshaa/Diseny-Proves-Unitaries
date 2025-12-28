@@ -61,14 +61,14 @@ public class ConsultationTerminal {
         createMedPrescriptionLine(prodID, instruc);
     }
 
-    public void callDecisionMakingAI() throws AIException, ProceduralException {
+    public void callDecisionMakingAI() throws AIException {
 
         ensureEditing();
         dmAI.initDecisionMakingAI();
         decisionMakingAIReady = true;
     }
 
-    public void askAIForSuggest(String prompt) throws BadPromptException, ProceduralException{
+    public void askAIForSuggest(String prompt) throws BadPromptException{
 
         ensureEditing();
         if (!decisionMakingAIReady) throw new ProceduralException("Decision making AI has not been started");
@@ -77,7 +77,7 @@ public class ConsultationTerminal {
         gotAISuggestions = true;
     }
 
-    public void extractGuidelinesFromSugg() throws ProceduralException {
+    public void extractGuidelinesFromSugg() {
 
         ensureEditing();
         if (!gotAISuggestions) throw new ProceduralException("Decision making AI has not send any suggestions");
@@ -85,20 +85,20 @@ public class ConsultationTerminal {
         dmAI.parseSuggest(aiAnswer);
     }
 
-    public void modifyDoseInLine(ProductID prodID, float newDose) throws ProceduralException, ProductNotInPrescriptionException {
+    public void modifyDoseInLine(ProductID prodID, float newDose) throws ProductNotInPrescriptionException {
 
         ensureEditing();
         mPresc.modifyDoseInLine(prodID, newDose);
     }
 
-    public void removeLine(ProductID prodID) throws ProductNotInPrescriptionException, ProceduralException {
+    public void removeLine(ProductID prodID) throws ProductNotInPrescriptionException {
 
         ensureEditing();
         mPresc.removeLine(prodID);
     }
 
     public void enterTreatmentEndingDate(Date date)
-            throws IncorrectEndingDateException, ProceduralException {
+            throws IncorrectEndingDateException {
 
         ensureEditing();
 
