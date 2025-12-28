@@ -1,4 +1,4 @@
-package mocks;
+package services.stub;
 
 import services.DecisionMakingAI;
 import services.Suggestion;
