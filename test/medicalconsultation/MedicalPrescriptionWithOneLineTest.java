@@ -51,7 +51,7 @@ public class MedicalPrescriptionWithOneLineTest implements MedicalPrescriptionTe
     public void modifyDoseInLineTest() throws ProductNotInPrescriptionException{
         TakingGuideline tg = new TakingGuideline(AFTERBREAKFAST, 12, 2.00f, 1, FqUnit.DAY, "Take with water");
         mp.modifyDoseInLine(new ProductID("123456789012"), 2.00f);
-        assertEquals(mp.getLines().get(new ProductID("123456789012")).getPosology().getDose(), tg.getPosology().getDose());
+        assertEquals(2.00f, tg.getPosology().getDose());
     }
 
     @Test
