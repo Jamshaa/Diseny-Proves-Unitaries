@@ -5,9 +5,11 @@ import data.HealthCardID;
 import medicalconsultation.ConsultationTerminal;
 import medicalconsultation.MedicalHistory;
 import medicalconsultation.MedicalPrescription;
-import mocks.HNSAnyCurrentPrescriptionExceptionStub;
-import mocks.HNSConnectExceptionStub;
-import mocks.HNSNotCompletedMedicalPrescriptionStub;
+import services.exceptions.HealthCardIDException;
+import services.stub.HNSAnyCurrentPrescriptionExceptionStub;
+import services.stub.HNSConnectExceptionStub;
+import services.stub.HNSHealthCardIDExceptionStub;
+import services.stub.HNSNotCompletedMedicalPrescriptionStub;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import services.exceptions.AnyCurrentPrescriptionException;
@@ -21,8 +23,8 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 public class ConsultationTerminalHNSExceptionTest {
 
     private HealthCardID cip;
-    private int membShipNumb;
     private String illness;
+    private ConsultationTerminal cT;
 
     private MedicalHistory history;
     private MedicalPrescription prescription;
@@ -30,42 +32,53 @@ public class ConsultationTerminalHNSExceptionTest {
     @BeforeEach
     void setUp() {
         cip = new HealthCardID("ABCD123456789012");
-        membShipNumb = 1234;
+        int membShipNumb = 1234;
         illness = "Hypertension";
+        cT = new ConsultationTerminal();
 
         history = new MedicalHistory(cip, membShipNumb);
         prescription = new MedicalPrescription(cip, membShipNumb, illness);
     }
 
     @Test
-    void initRevisionConnectExceptionTest() {
-        ConsultationTerminal ct = new ConsultationTerminal();
-        ct.setHealthNationalService(new HNSConnectExceptionStub());
+    void connectExceptionTest() {
 
-        assertThrows(ConnectException.class, () -> ct.initRevision(cip, illness));
+        cT.setHealthNationalService(new HNSConnectExceptionStub());
+
+        assertThrows(ConnectException.class, () -> cT.initRevision(cip, illness));
     }
 
     @Test
-    void currentPrescriptionExceptionTest() {
-        ConsultationTerminal ct = new ConsultationTerminal();
-        ct.setHealthNationalService(new HNSAnyCurrentPrescriptionExceptionStub(history));
+    void healthCardIDExceptionTest() {
 
-        assertThrows(AnyCurrentPrescriptionException.class, () -> ct.initRevision(cip, illness));
+        cT.setHealthNationalService(new HNSHealthCardIDExceptionStub());
+
+        assertThrows(HealthCardIDException.class, () -> cT.initRevision(cip, illness));
     }
 
     @Test
-    void notCompletedPrescriptionTest() throws Exception {
-        ConsultationTerminal ct = new ConsultationTerminal();
-        ct.setHealthNationalService(new HNSNotCompletedMedicalPrescriptionStub(history, prescription));
-        ct.setESignature(new DigitalSignature("SIGNED".getBytes()));
+    void anyCurrentPrescriptionExceptionTest() {
 
-        ct.initRevision(cip, illness);
-        ct.initMedicalPrescriptionEdition();
+        cT.setHealthNationalService(new HNSAnyCurrentPrescriptionExceptionStub());
+
+        assertThrows(AnyCurrentPrescriptionException.class, () -> cT.initRevision(cip, illness));
+    }
+
+    @Test
+    void notCompletedMedicalPrescriptionExceptionTest() throws ConnectException {
+
+        cT.setHealthNationalService(new HNSNotCompletedMedicalPrescriptionStub(history,prescription));
+
+        cT.initRevision(cip, illness);
+        cT.initMedicalPrescriptionEdition();
 
         // fija fecha fin para pasar el check interno (treatmentPeriodEstablished)
         Date end = new Date(System.currentTimeMillis() + 3L * 24 * 60 * 60 * 1000);
-        ct.enterTreatmentEndingDate(end);
+        cT.enterTreatmentEndingDate(end);
 
-        assertThrows(NotCompletedMedicalPrescription.class, ct::sendHistoryAndPrescription);
+        cT.setESignature(new DigitalSignature("SIGNED".getBytes()));
+        cT.stampeESignature();
+
+        assertThrows(NotCompletedMedicalPrescription.class, ()-> cT.sendHistoryAndPrescription());
     }
 }
