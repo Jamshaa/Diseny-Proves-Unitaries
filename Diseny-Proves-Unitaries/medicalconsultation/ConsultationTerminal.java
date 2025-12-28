@@ -20,6 +20,7 @@ public class ConsultationTerminal {
     private boolean treatmentPeriodEstablished = false;
     private boolean decisionMakingAIReady = false;
     private boolean gotAISuggestions = false;
+    private boolean stampedESign = false;
     private String aiAnswer;
     private DigitalSignature eSign;
     private HealthNationalService hns;
@@ -149,6 +150,8 @@ public class ConsultationTerminal {
         }
 
         mPresc.setESign(eSign);
+        stampedESign = true;
+
     }
 
     public MedicalPrescription sendHistoryAndPrescription()
@@ -157,9 +160,9 @@ public class ConsultationTerminal {
             AnyCurrentPrescriptionException,
             NotCompletedMedicalPrescription {
 
-        if (!editingPrescription || !treatmentPeriodEstablished || eSign == null) {
-            throw new NotCompletedMedicalPrescription(
-                    "Medical prescription is not completed"
+        if (!editingPrescription || !treatmentPeriodEstablished || !stampedESign) {
+            throw new ProceduralException(
+                    "Medical prescription edition is not completed (editing, treatment period and electronic signature required)"
             );
         }
 
