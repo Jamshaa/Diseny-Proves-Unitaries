@@ -1,15 +1,17 @@
-package medicalconsultation;
+package medicalconsultation.consultationterminal;
 
 import data.DigitalSignature;
 import data.HealthCardID;
 import data.ProductID;
 import interfaces.ConsultationTerminalFlowTestInterface;
 import interfaces.ConsultationTerminalProceduralTestInterface;
+import medicalconsultation.ConsultationTerminal;
+import medicalconsultation.MedicalHistory;
+import medicalconsultation.MedicalPrescription;
 import mocks.AIStubHappyPath;
 import mocks.HNSStubHappyPath;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import services.Suggestion;
 
 import java.util.Date;
 import java.util.List;
@@ -30,7 +32,7 @@ class NewConsultationTerminalTest implements ConsultationTerminalFlowTestInterfa
     private MedicalPrescription prescription;
 
     @BeforeEach
-    void setUp() throws Exception {
+    void setUp() {
 
         ct = new ConsultationTerminal();
 

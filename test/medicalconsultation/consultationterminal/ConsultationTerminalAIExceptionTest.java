@@ -1,7 +1,10 @@
-package medicalconsultation;
+package medicalconsultation.consultationterminal;
 
 import data.DigitalSignature;
 import data.HealthCardID;
+import medicalconsultation.ConsultationTerminal;
+import medicalconsultation.MedicalHistory;
+import medicalconsultation.MedicalPrescription;
 import mocks.AIBadPromptStub;
 import mocks.AIExceptionStub;
 import org.junit.jupiter.api.BeforeEach;

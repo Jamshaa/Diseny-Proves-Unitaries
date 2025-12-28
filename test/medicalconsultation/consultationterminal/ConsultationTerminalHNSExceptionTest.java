@@ -1,8 +1,10 @@
-package medicalconsultation;
+package medicalconsultation.consultationterminal;
 
 import data.DigitalSignature;
 import data.HealthCardID;
-import interfaces.ConsultationTerminalFlowTestInterface;
+import medicalconsultation.ConsultationTerminal;
+import medicalconsultation.MedicalHistory;
+import medicalconsultation.MedicalPrescription;
 import mocks.HNSAnyCurrentPrescriptionExceptionStub;
 import mocks.HNSConnectExceptionStub;
 import mocks.HNSNotCompletedMedicalPrescriptionStub;
